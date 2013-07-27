@@ -1,19 +1,5 @@
 require 'spec_helper'
 
-class TestClass
-  def invoke_a_method
-  end
-
-  def invoke_bad_method
-  end
-end
-
-class BadFilter
-  def allow?(line)
-    line[/bad_method/].nil?
-  end
-end
-
 describe StackTraceGenerator do
   describe "enable!" do
     it "turns on the trace function" do
@@ -50,28 +36,28 @@ describe StackTraceGenerator do
 
       stack_trace = tracer.stack_trace { object.invoke_a_method }
 
-      stack_trace.any? { |line| ! line[/invoke_a_method/].nil? }.should be_true
+      include_a_matching_line(stack_trace, /invoke_a_method/).should be_true
     end
 
     it "applies filters to the stack trace" do
-      tracer = StackTraceGenerator.new
-      tracer.add_filter(BadFilter.new)
+      tracer = StackTraceGenerator.new(BadFilter.new)
       object = TestClass.new
 
       stack_trace = tracer.stack_trace { object.invoke_bad_method }
 
-      stack_trace.all? { |line| line[/bad_method/].nil? }.should be_true
+      include_a_matching_line(stack_trace, /invoke_bad_method/).should_not be_true
     end
   end
 
-  describe "add_filter" do
-    it "adds the filter to the tracer" do
-      tracer = StackTraceGenerator.new
-      tracer.filters.should be_empty
-
-      tracer.add_filter(BadFilter.new)
-
+  describe "initialize" do
+    it "adds the filters to the tracer" do
+      tracer = StackTraceGenerator.new(BadFilter.new)
       tracer.filters.length.should == 1
+    end
+
+    it "accepts a variable number of arguments" do
+      tracer = StackTraceGenerator.new(BadFilter.new, BadFilter.new)
+      tracer.filters.length.should == 2
     end
   end
 end

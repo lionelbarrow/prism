@@ -8,3 +8,21 @@ RSpec.configure do |config|
   config.filter_run :focus
   config.order = 'random'
 end
+
+def include_a_matching_line(lines, pattern)
+  lines.any? { |line| ! line[pattern].nil? }
+end
+
+class TestClass
+  def invoke_a_method
+  end
+
+  def invoke_bad_method
+  end
+end
+
+class BadFilter
+  def allow?(line)
+    line[/bad_method/].nil?
+  end
+end

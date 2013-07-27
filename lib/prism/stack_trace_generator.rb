@@ -1,13 +1,10 @@
 class StackTraceGenerator
   attr_reader :stack_frames, :filters
 
-  def initialize
+  def initialize(*filters)
     @stack_frames = []
     @filters = []
-  end
-
-  def add_filter(filter)
-    @filters << filter
+    filters.each { |f| @filters << f }
   end
 
   def enable!
