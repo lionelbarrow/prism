@@ -1,5 +1,3 @@
 require "prism/version"
-
-module Prism
-  # Your code goes here...
-end
+require "prism/dirty_tests"
+require "prism/stack_trace_generator"
