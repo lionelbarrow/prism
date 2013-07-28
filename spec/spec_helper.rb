@@ -9,10 +9,6 @@ RSpec.configure do |config|
   config.order = 'random'
 end
 
-def include_a_matching_line(lines, pattern)
-  lines.any? { |line| ! line[pattern].nil? }
-end
-
 class TestClass
   def invoke_a_method
   end
@@ -22,7 +18,17 @@ class TestClass
 end
 
 class BadFilter
-  def allow?(line)
-    line[/bad_method/].nil?
+  def self.allow?(frame)
+    if frame.id.nil?
+      true
+    else
+      frame.id[/invoke_bad_method/].nil?
+    end
+  end
+end
+
+
+class NullObject
+  def method_missing(method, *args, &block)
   end
 end

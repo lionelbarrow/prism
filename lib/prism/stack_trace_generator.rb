@@ -25,10 +25,12 @@ class StackTraceGenerator
   def _stack_frame_recorder
     Proc.new do |event, file, line, id, binding, classname|
       begin
-        qualified_event = sprintf("%8s %s:%-2d %10s %8s", event, file, line, id, classname)
+        qualified_event = StackFrame.new(event, file, line, id, binding, classname)
         @stack_frames << qualified_event if @filters.all? { |f| f.allow?(qualified_event) }
-      rescue
+      rescue Exception => e
         puts "Stack frame recorder blew up"
+        puts e.message
+        puts e.backtrace.inspect
       end
     end
   end

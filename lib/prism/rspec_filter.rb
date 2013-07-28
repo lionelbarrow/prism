@@ -1,5 +1,5 @@
 class RSpecFilter
-  def allow?
+  def self.allow?(frame)
     true
   end
 end

@@ -36,27 +36,44 @@ describe StackTraceGenerator do
 
       stack_trace = tracer.stack_trace { object.invoke_a_method }
 
-      include_a_matching_line(stack_trace, /invoke_a_method/).should be_true
+      stack_trace.any? do |frame|
+        if frame.id.nil?
+          false
+        else
+          frame.id[/invoke_a_method/].nil?
+        end
+      end.should be_true
     end
 
     it "applies filters to the stack trace" do
-      tracer = StackTraceGenerator.new(BadFilter.new)
+      tracer = StackTraceGenerator.new(BadFilter)
       object = TestClass.new
 
       stack_trace = tracer.stack_trace { object.invoke_bad_method }
 
-      include_a_matching_line(stack_trace, /invoke_bad_method/).should_not be_true
+      stack_trace.each do |frame|
+        BadFilter.allow?(frame).should be_true
+      end
+    end
+
+    it "includes every stack frame if no filters are present" do
+      tracer = StackTraceGenerator.new
+      object = TestClass.new
+
+      stack_trace = tracer.stack_trace { object.invoke_bad_method }
+
+      stack_trace.length.should_not == 0
     end
   end
 
   describe "initialize" do
     it "adds the filters to the tracer" do
-      tracer = StackTraceGenerator.new(BadFilter.new)
+      tracer = StackTraceGenerator.new(BadFilter)
       tracer.filters.length.should == 1
     end
 
     it "accepts a variable number of arguments" do
-      tracer = StackTraceGenerator.new(BadFilter.new, BadFilter.new)
+      tracer = StackTraceGenerator.new(BadFilter, BadFilter)
       tracer.filters.length.should == 2
     end
   end
