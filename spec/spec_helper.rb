@@ -50,3 +50,5 @@ def restore_rspec_example_groups
     remove_method :original_run
   end
 end
+
+Prism::Configuration.path_root = "prism"
