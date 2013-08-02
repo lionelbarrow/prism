@@ -1,6 +1,6 @@
 require "prism/version"
 require "prism/stack_frame"
-require "prism/c_call_filter"
+require "prism/prism_filter"
 require "prism/stack_trace_generator"
 require "prism/rspec_stack_trace_generator"
 require "prism/rspec_filter"
