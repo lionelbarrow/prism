@@ -7,8 +7,11 @@ describe RSpecFilter do
       RSpecFilter.allow?(stack_frame).should be_true
     end
 
-    it "is false for stack frames from the RSpec::Core::Configuration class" do
+    it "is false for stack frames from the RSpec::Core classes" do
       stack_frame = StackFrame.new("call", "test.rb", 14, "disable!", "binding", "RSpec::Core::Configuration")
+      RSpecFilter.allow?(stack_frame).should be_false
+
+      stack_frame = StackFrame.new("call", "test.rb", 14, "disable!", "binding", "RSpec::Core::ExampleGroup")
       RSpecFilter.allow?(stack_frame).should be_false
     end
 

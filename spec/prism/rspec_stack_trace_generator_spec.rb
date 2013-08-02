@@ -2,21 +2,11 @@ require 'spec_helper'
 
 describe RSpecStackTraceGenerator do
   before(:each) do
-    class << RSpec::Core::ExampleGroup; self; end.class_eval do
-      alias_method :original_run, :run
-
-      def run
-        original_run(NullObject.new)
-      end
-    end
+    stub_rspec_example_groups
   end
 
   after(:each) do
-    class << RSpec::Core::ExampleGroup; self; end.class_eval do
-      remove_method :run
-      alias_method :run, :original_run
-      remove_method :original_run
-    end
+    restore_rspec_example_groups
   end
 
   describe "stack_trace" do
@@ -51,9 +41,7 @@ describe RSpecStackTraceGenerator do
         example_group.run
       end
 
-      trace.each do |frame|
-        frame.classname.to_s.should == "NullObject"
-      end
+      (trace.length < 15).should be_true
     end
   end
 end
