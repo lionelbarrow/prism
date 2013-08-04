@@ -1,5 +1,5 @@
 class PrismFilter
-  BLACKLISTED_CLASSNAMES = Set.new(["StackTraceGenerator", "RSpecController", "RSpecStackTraceGenerator"])
+  BLACKLISTED_CLASSNAMES = Set.new(["StackTraceGenerator", "RSpecController", "RSpecStackTraceGenerator", "Core"])
 
   def self.allow?(frame)
     _classname_ok?(frame) && _file_is_not_in_prism_gem(frame)

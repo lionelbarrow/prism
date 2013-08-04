@@ -11,7 +11,9 @@ class StackFrame
   end
 
   def file
-    "#{Prism::Configuration.path_root}#{@file.split(Prism::Configuration.path_root)[-1]}"
+    matches = /#{Prism::Configuration.path_root}\/(\S+)$/.match(@file)
+    return @file if matches.nil?
+    matches.captures.first
   end
 
   def to_s
