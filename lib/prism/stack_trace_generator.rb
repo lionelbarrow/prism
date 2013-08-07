@@ -2,7 +2,7 @@ class StackTraceGenerator
   attr_reader :stack_frames, :filters
 
   def initialize(*filters)
-    @stack_frames = []
+    @stack_frames = Set.new([])
     @filters = []
     filters.each { |f| @filters << f }
   end
@@ -26,7 +26,7 @@ class StackTraceGenerator
     Proc.new do |event, file, line, id, binding, classname|
       begin
         qualified_event = StackFrame.new(event, file, line, id, binding, classname)
-        @stack_frames << qualified_event if @filters.all? { |f| f.allow?(qualified_event) }
+        @stack_frames << qualified_event.file if @filters.all? { |f| f.allow?(qualified_event) }
       rescue Exception => e
         puts "Stack frame recorder blew up"
         puts e.message

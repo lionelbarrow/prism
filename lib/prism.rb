@@ -4,6 +4,7 @@ require "prism/prism_filter"
 require "prism/stack_trace_generator"
 require "prism/diff_parser"
 require "prism/rspec_stack_trace_generator"
+require "prism/rspec_stack_trace"
 require "prism/core"
 require "prism/rspec_filter"
 

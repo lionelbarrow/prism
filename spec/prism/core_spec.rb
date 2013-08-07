@@ -9,8 +9,8 @@ describe Core do
     restore_rspec_example_groups
   end
 
-  describe "files_in_scope_for_group" do
-    it "generates a set of files" do
+  describe "stack_trace_for_group" do
+    it "returns a StackTrace with a unique identifier and a file set" do
       core = Core.new(RSpecStackTraceGenerator.new)
 
       example_group = RSpec::Core::ExampleGroup.describe("my favorite class")
@@ -19,7 +19,9 @@ describe Core do
         object.invoke_a_method
       end
 
-      core.files_in_scope_for_group(example_group).should_not be_nil
+      trace = core.stack_trace_for_group(example_group)
+      trace.location.should == "spec/prism/core_spec.rb:16"
+      trace.file_set.should include("spec/spec_helper.rb")
     end
   end
 
@@ -86,7 +88,46 @@ END
 
       core.run_and_save_trace!(example_group)
 
-      core.get_saved_trace(example_group).should == core.files_in_scope_for_group(example_group)
+      core.get_saved_trace(example_group).should == core.stack_trace_for_group(example_group)
+    end
+
+    it "saves each stack trace to a unique location" do
+      core = Core.new(RSpecStackTraceGenerator.new)
+
+      example_group_one = RSpec::Core::ExampleGroup.describe("my favorite class")
+      example_group_one.example("foos the bar") do
+        object = TestClass.new
+        object.invoke_a_method
+      end
+
+      core.run_and_save_trace!(example_group_one)
+
+      example_group_two = RSpec::Core::ExampleGroup.describe("a class I don't like")
+      example_group_two.example("bars the foo") do
+        object = TestClass.new
+        object.invoke_a_bad_method
+      end
+
+      core.run_and_save_trace!(example_group_two)
+
+      core.get_saved_trace(example_group_one).should_not == core.get_saved_trace(example_group_two)
+    end
+  end
+
+  describe "get_saved_trace" do
+    it "gets the saved trace of the example group" do
+      core = Core.new(RSpecStackTraceGenerator.new)
+
+      example_group = RSpec::Core::ExampleGroup.describe("my favorite class")
+      example_group.example("foos the bar") do
+        object = TestClass.new
+        object.invoke_a_method
+      end
+
+      core.run_and_save_trace!(example_group)
+
+      new_stack_trace = RSpecStackTraceGenerator.new.stack_trace { example_group.run }
+      core.get_saved_trace(example_group).should == RSpecStackTrace.new(example_group, new_stack_trace)
     end
   end
 end

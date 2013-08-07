@@ -1,6 +1,6 @@
 class RSpecStackTraceGenerator
   def initialize
-    @tracer = StackTraceGenerator.new(RSpecFilter, PrismFilter)
+    @tracer = StackTraceGenerator.new
   end
 
   def stack_trace(&block)
