@@ -1,5 +1,2 @@
 require "test_project/version"
-
-module TestProject
-  # Your code goes here...
-end
+require "test_project/adder"
