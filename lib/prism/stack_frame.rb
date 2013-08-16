@@ -11,7 +11,7 @@ class StackFrame
   end
 
   def file
-    matches = /#{Prism::Configuration.path_root}\/(\S+)$/.match(@file)
+    matches = /#{Prism::Configuration.project_root}\/(\S+)$/.match(@file)
     return @file if matches.nil?
     matches.captures.first
   end

@@ -6,8 +6,8 @@ class Core
     _save_to_trace_map_file({}) unless File.exists?(TRACE_MAP_FILE)
   end
 
-  def run_and_save_trace!(example_group)
-    stack_trace = stack_trace_for_group(example_group)
+  def run_and_save_trace!(example_group, reporter)
+    stack_trace = stack_trace_for_group(example_group, reporter)
     new_trace_map = _readonly_trace_map
     new_trace_map[stack_trace.location] = stack_trace
     _save_to_trace_map_file(new_trace_map)
@@ -18,8 +18,8 @@ class Core
     _readonly_trace_map[location]
   end
 
-  def stack_trace_for_group(example_group)
-    stack_frames = @tracer.stack_trace { example_group.run }
+  def stack_trace_for_group(example_group, reporter)
+    stack_frames = @tracer.stack_trace { example_group.run(reporter) }
     RSpecStackTrace.new(example_group, stack_frames)
   end
 

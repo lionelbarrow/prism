@@ -49,4 +49,4 @@ def restore_rspec_example_groups
   end
 end
 
-Prism::Configuration.path_root = "prism"
+Prism::Configuration.project_root = "prism"
