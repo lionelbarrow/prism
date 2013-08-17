@@ -8,21 +8,21 @@ module RSpec
       def prism_project_root=(root)
         Prism::Configuration.project_root = root
       end
-    end
-  end
-end
 
-module RSpec
-  module Core
-    class World
-      def example_groups
-        @fegl ||= FakeExampleGroupList.new(@example_groups).extend(RSpec::Core::Extensions::Ordered::ExampleGroups)
+      def prism_enabled=(enabled)
+        if enabled
+          World.class_eval do
+            define_method(:example_groups) do
+              @fegl ||= ExampleGroupList.new(@example_groups).extend(RSpec::Core::Extensions::Ordered::ExampleGroups)
+            end
+          end
+        end
       end
     end
   end
 end
 
-class FakeExampleGroup
+class ExampleGroupWrapper
   def initialize(inner_group)
     @inner_group = inner_group
   end
@@ -36,11 +36,11 @@ class FakeExampleGroup
   end
 end
 
-class FakeExampleGroupList
+class ExampleGroupList
   include Enumerable
 
   def initialize(list)
-    @inner_list = list.map { |i| FakeExampleGroup.new(i) }
+    @inner_list = list.map { |i| ExampleGroupWrapper.new(i) }
   end
 
   def each(&block)
@@ -48,7 +48,7 @@ class FakeExampleGroupList
   end
 
   def <<(other)
-    @inner_list << FakeExampleGroup.new(other)
+    @inner_list << ExampleGroupWrapper.new(other)
   end
 
   def size

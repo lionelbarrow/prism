@@ -9,11 +9,7 @@ describe RSpecStackTrace do
         object.invoke_a_method
       end
 
-      RSpecStackTrace.unique_identifier_for_group(example_group).should == "spec/prism/rspec_stack_trace_spec.rb:6"
+      RSpecStackTrace.location_of_group(example_group).should == "spec/prism/rspec_stack_trace_spec.rb:6"
     end
-  end
-
-  describe "unique_identifier" do
-    it "delegates to the instance method"
   end
 end

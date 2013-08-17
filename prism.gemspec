@@ -1,10 +1,9 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'prism/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "prism"
+  spec.name          = "0.0.1"
   spec.version       = Prism::VERSION
   spec.authors       = ["lionelbarrow"]
   spec.email         = ["lionelbarrow@gmail.com"]

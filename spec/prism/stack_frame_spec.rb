@@ -2,8 +2,8 @@ require "spec_helper"
 
 describe StackFrame do
   describe "file" do
-    it "only includes file paths after the Prism::Configuration.path_root" do
-      Prism::Configuration.path_root = "prism"
+    it "only includes file paths after the Prism::Configuration.project_root" do
+      Prism::Configuration.project_root = "prism"
 
       frame = StackFrame.new("c-call", "/Users/lionel/prism/spec/spec_helper.rb", 5, nil, nil, nil)
 
@@ -11,7 +11,7 @@ describe StackFrame do
     end
 
     it "includes file paths after the first occurance of the path root" do
-      Prism::Configuration.path_root = "prism"
+      Prism::Configuration.project_root = "prism"
 
       frame = StackFrame.new("c-call", "/Users/lionel/prism/spec/prism/core_spec.rb", 5, nil, nil, nil)
 

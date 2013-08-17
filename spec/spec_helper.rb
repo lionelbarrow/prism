@@ -1,5 +1,7 @@
 require "prism"
 
+Prism::Configuration.project_root = "prism"
+
 RSpec.configure do |config|
   config.treat_symbols_as_metadata_keys_with_true_values = true
   config.run_all_when_everything_filtered = true
@@ -48,5 +50,3 @@ def restore_rspec_example_groups
     remove_method :original_run
   end
 end
-
-Prism::Configuration.project_root = "prism"

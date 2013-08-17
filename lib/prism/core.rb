@@ -1,9 +1,8 @@
 class Core
-  TRACE_MAP_FILE = ".prism"
 
-  def initialize(tracer)
-    @tracer = tracer
-    _save_to_trace_map_file({}) unless File.exists?(TRACE_MAP_FILE)
+  def initialize
+    @tracer = StackTraceGenerator.new
+    _save_to_trace_map_file({}) unless File.exists?(_trace_map_file)
   end
 
   def run_and_save_trace!(example_group, reporter)
@@ -27,11 +26,21 @@ class Core
     Set.new(DiffParser.affected_files(diff))
   end
 
+  def tests_needed_to_run
+    _readonly_trace_map.keys.each do |test|
+
+    end
+  end
+
   def _readonly_trace_map
-    @trace_map ||= File.open(TRACE_MAP_FILE, "r") { |f| Marshal.load(f.read) }
+    @trace_map ||= File.open(_trace_map_file, "r") { |f| Marshal.load(f.read) }
   end
 
   def _save_to_trace_map_file(trace_map)
-    File.open(TRACE_MAP_FILE, "w") { |f| f << Marshal.dump(trace_map) }
+    File.open(_trace_map_file, "w") { |f| f << Marshal.dump(trace_map) }
+  end
+
+  def _trace_map_file
+    ".prism"
   end
 end
