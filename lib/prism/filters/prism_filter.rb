@@ -1,4 +1,4 @@
-class PrismFilter
+class Prism::PrismFilter
   BLACKLISTED_CLASSNAMES = Set.new(["StackTraceGenerator", "RSpecController", "RSpecStackTraceGenerator", "Core"])
 
   def self.allow?(frame)

@@ -1,4 +1,4 @@
-class RSpecFilter
+class Prism::RSpecFilter
   def self.allow?(frame)
     _classname_ok?(frame) && _file_is_not_in_rspec(frame)
   end

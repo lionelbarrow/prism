@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe DiffParser do
+describe Prism::DiffParser do
   describe "self.affected_files" do
     it "returns a set of affected files" do
       diff = <<-END
@@ -44,7 +44,7 @@ index a6888ad..6734429 100644
 
    def initialize(error_code, message, show_to_user, title)
 END
-      files = DiffParser.affected_files(diff)
+      files = Prism::DiffParser.affected_files(diff)
 
       files.should include("app/middlewares/database_reconnect.rb")
       files.should include("app/models/card.rb")
