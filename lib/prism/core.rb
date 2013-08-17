@@ -12,7 +12,7 @@ module Prism
       _save_to_trace_map_file(new_trace_map)
     end
 
-    def get_saved_trace(example_group)
+    def get_saved_trace!(example_group)
       location = RSpecStackTrace.location_of_group(example_group)
       _readonly_trace_map[location]
     end
@@ -24,12 +24,6 @@ module Prism
 
     def files_in_scope_for_diff(diff)
       Set.new(DiffParser.affected_files(diff))
-    end
-
-    def tests_needed_to_run
-      _readonly_trace_map.keys.each do |test|
-
-      end
     end
 
     def _readonly_trace_map

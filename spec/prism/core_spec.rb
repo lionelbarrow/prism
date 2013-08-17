@@ -80,7 +80,7 @@ END
 
       core.run_and_save_trace!(example_group, NullObject.new)
 
-      core.get_saved_trace(example_group).should == core.stack_trace_for_group(example_group, NullObject.new)
+      core.get_saved_trace!(example_group).should == core.stack_trace_for_group(example_group, NullObject.new)
     end
 
     it "saves each stack trace to a unique location" do
@@ -102,7 +102,7 @@ END
 
       core.run_and_save_trace!(example_group_two, NullObject.new)
 
-      core.get_saved_trace(example_group_one).should_not == core.get_saved_trace(example_group_two)
+      core.get_saved_trace!(example_group_one).should_not == core.get_saved_trace!(example_group_two)
     end
   end
 end
