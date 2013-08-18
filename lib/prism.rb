@@ -3,8 +3,6 @@ require "prism/core"
 require "prism/diff_parser"
 require "prism/stack_frame"
 require "prism/stack_trace_generator"
-require "prism/rspec_configuration"
-require "prism/rspec_stack_trace_generator"
 require "prism/rspec_stack_trace"
 
 require "prism/filters/prism_filter"

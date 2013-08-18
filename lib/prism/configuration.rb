@@ -6,5 +6,9 @@ module Prism
       @project_root = project_root
       @diff = diff
     end
+
+    def core
+      @core ||= Core.new(self)
+    end
   end
 end

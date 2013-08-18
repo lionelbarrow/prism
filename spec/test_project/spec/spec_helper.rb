@@ -14,7 +14,7 @@ RSpec.configure do |config|
   config.run_all_when_everything_filtered = true
   config.filter_run :focus
   config.order = 'random'
-  config.prism_project_root = "test_project"
+  config.prism_project_root = "spec/test_project"
   config.prism_diff = File.open("diff").read
   config.prism_enabled = true
 end

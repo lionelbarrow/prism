@@ -2,9 +2,9 @@ module Prism
   class ExampleGroupList
     include Enumerable
 
-    def initialize(list, prism_config)
+    def initialize(prism_config, list)
       @config = prism_config
-      @inner_list = list.map { |i| ExampleGroupWrapper.new(i, @config) }
+      @inner_list = list.map { |i| ExampleGroupWrapper.new(@config, i) }
     end
 
     def each(&block)
@@ -12,7 +12,7 @@ module Prism
     end
 
     def <<(other)
-      @inner_list << ExampleGroupWrapper.new(other, @config)
+      @inner_list << ExampleGroupWrapper.new(@config, other)
     end
 
     def size

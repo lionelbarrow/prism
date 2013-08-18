@@ -1,8 +1,8 @@
 module Prism
   class ExampleGroupWrapper
-    def initialize(inner_group, prism_config)
-      @inner_group = inner_group
+    def initialize(prism_config, inner_group)
       @config = prism_config
+      @inner_group = inner_group
     end
 
     def run(reporter)

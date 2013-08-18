@@ -22,7 +22,7 @@ module RSpec
         config = Prism::Configuration.new(@prism_root, @prism_diff)
         World.class_eval do
           define_method(:example_groups) do
-            @fegl ||= ExampleGroupList.new(@example_groups, config).extend(Extensions::Ordered::ExampleGroups)
+            @fegl ||= Prism::ExampleGroupList.new(config, @example_groups).extend(Extensions::Ordered::ExampleGroups)
           end
         end
       end

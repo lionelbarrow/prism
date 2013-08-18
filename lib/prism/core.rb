@@ -1,7 +1,8 @@
 module Prism
   class Core
     def initialize(config)
-      @tracer = StackTraceGenerator.new(config)
+      @config = config
+      @tracer = StackTraceGenerator.new(config, PrismFilter, RSpecFilter)
       _save_to_trace_map_file({}) unless File.exists?(_trace_map_file)
     end
 
@@ -10,6 +11,23 @@ module Prism
       new_trace_map = _readonly_trace_map
       new_trace_map[stack_trace.location] = stack_trace
       _save_to_trace_map_file(new_trace_map)
+    end
+
+    def tests_needed_to_run
+      tests = []
+      changed_files = files_in_scope_for_diff(@config.diff)
+      stack_trace_map = _readonly_trace_map
+      stack_trace_map.keys.each do |group|
+        puts "Considering stack trace map[#{group}]: #{stack_trace_map[group].file_set.inspect}"
+        puts "Does it intersect #{changed_files.inspect}?"
+        if !stack_trace_map[group].file_set.intersection(changed_files).empty?
+          puts "Yes"
+          tests << group
+        else
+          puts "No"
+        end
+      end
+      tests
     end
 
     def get_saved_trace!(example_group)
@@ -35,7 +53,7 @@ module Prism
     end
 
     def _trace_map_file
-      ".prism"
+      "#{@config.project_root}/.prism"
     end
   end
 end

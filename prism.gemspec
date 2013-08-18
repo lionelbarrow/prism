@@ -3,8 +3,8 @@ lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
-  spec.name          = "0.0.1"
-  spec.version       = Prism::VERSION
+  spec.name          = "prism"
+  spec.version       = "0.0.1"
   spec.authors       = ["lionelbarrow"]
   spec.email         = ["lionelbarrow@gmail.com"]
   spec.description   = "PRISM watches your calls. Method calls."
