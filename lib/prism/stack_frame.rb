@@ -2,7 +2,8 @@ module Prism
   class StackFrame
     attr_reader :event, :line, :id, :binding, :classname
 
-    def initialize(event, file, line, id, binding, classname)
+    def initialize(config, event, file, line, id, binding, classname)
+      @config = config
       @event = event
       @file = file
       @line = line
@@ -12,7 +13,7 @@ module Prism
     end
 
     def file
-      matches = /#{Prism::Configuration.project_root}\/(\S+)$/.match(@file)
+      matches = /#{@config.project_root}\/(\S+)$/.match(@file)
         return @file if matches.nil?
       matches.captures.first
     end

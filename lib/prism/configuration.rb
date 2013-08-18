@@ -1,19 +1,10 @@
 module Prism
   class Configuration
-    def self.project_root=(root)
-      @project_root = root
-    end
+    attr_reader :project_root, :diff
 
-    def self.diff=(diff)
+    def initialize(project_root, diff)
+      @project_root = project_root
       @diff = diff
-    end
-
-    def self.diff
-      @diff
-    end
-
-    def self.project_root
-      @project_root || raise("You must set a Prism::Configuration.project_root")
     end
   end
 end

@@ -1,9 +1,13 @@
 require "spec_helper"
 
 describe Prism::Core do
+  before(:each) do
+    @config = Prism::Configuration.new("prism", "diff")
+  end
+
   describe "stack_trace_for_group" do
     it "returns a StackTrace with a unique identifier and a file set" do
-      core = Prism::Core.new
+      core = Prism::Core.new(@config)
 
       example_group = RSpec::Core::ExampleGroup.describe("my favorite class")
       example_group.example("foos the bar") do
@@ -12,14 +16,14 @@ describe Prism::Core do
       end
 
       trace = core.stack_trace_for_group(example_group, NullObject.new)
-      trace.location.should == "spec/prism/core_spec.rb:8"
+      trace.location.should == "spec/prism/core_spec.rb:12"
       trace.file_set.should include("spec/spec_helper.rb")
     end
   end
 
   describe "files_scope_for_diff" do
     it "generates a set of files" do
-      core = Prism::Core.new
+      core = Prism::Core.new(@config)
       diff = <<-END
 diff --git a/app/middlewares/database_reconnect.rb b/app/middlewares/database_reconnect.rb
 index 70ec3b0..054be11 100644
@@ -70,7 +74,7 @@ END
 
   describe "run_and_save_trace!" do
     it "runs the example group and records the files needed to run" do
-      core = Prism::Core.new
+      core = Prism::Core.new(@config)
 
       example_group = RSpec::Core::ExampleGroup.describe("my favorite class")
       example_group.example("foos the bar") do
@@ -84,7 +88,7 @@ END
     end
 
     it "saves each stack trace to a unique location" do
-      core = Prism::Core.new
+      core = Prism::Core.new(@config)
 
       example_group_one = RSpec::Core::ExampleGroup.describe("my favorite class")
       example_group_one.example("foos the bar") do

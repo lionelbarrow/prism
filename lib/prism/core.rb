@@ -1,7 +1,7 @@
 module Prism
   class Core
-    def initialize
-      @tracer = StackTraceGenerator.new
+    def initialize(config)
+      @tracer = StackTraceGenerator.new(config)
       _save_to_trace_map_file({}) unless File.exists?(_trace_map_file)
     end
 

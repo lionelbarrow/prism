@@ -2,7 +2,8 @@ module Prism
   class StackTraceGenerator
     attr_reader :stack_frames, :filters
 
-    def initialize(*filters)
+    def initialize(config, *filters)
+      @config = config
       @stack_frames = Set.new([])
       @filters = []
       filters.each { |f| @filters << f }
@@ -26,7 +27,7 @@ module Prism
     def _stack_frame_recorder
       Proc.new do |event, file, line, id, binding, classname|
         begin
-          qualified_event = StackFrame.new(event, file, line, id, binding, classname)
+          qualified_event = StackFrame.new(@config, event, file, line, id, binding, classname)
           @stack_frames << qualified_event if @filters.all? { |f| f.allow?(qualified_event) }
         rescue Exception => e
           puts "Stack frame recorder blew up"
