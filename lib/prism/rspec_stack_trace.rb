@@ -12,7 +12,7 @@ module Prism
 
     def initialize(example_group, stack_trace)
       @location = self.class.location_of_group(example_group)
-      @file_set = Set.new(stack_trace.map { |event| event.file })
+      @file_set = Set.new(stack_trace.map { |event| event.filename })
     end
 
     def ==(other)

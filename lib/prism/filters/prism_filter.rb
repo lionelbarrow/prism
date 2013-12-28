@@ -11,7 +11,7 @@ module Prism
     end
 
     def self._file_is_not_in_prism_gem(frame)
-      frame.file[/stack_trace_generator/].nil?
+      frame.filename[/stack_trace_generator/].nil?
     end
   end
 end

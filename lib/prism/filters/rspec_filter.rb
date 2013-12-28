@@ -13,7 +13,7 @@ module Prism
     end
 
     def self._file_is_not_in_rspec(frame)
-      frame.file[/rspec-core/].nil? && frame.file[/rspec-mocks/].nil? && frame.file[/rspec-expectations/].nil?
+      frame.filename[/rspec-core/].nil? && frame.filename[/rspec-mocks/].nil? && frame.filename[/rspec-expectations/].nil?
     end
   end
 end
