@@ -15,6 +15,6 @@ RSpec.configure do |config|
   config.filter_run :focus
   config.order = 'random'
   config.prism_project_root = "spec/test_project"
-  config.prism_diff = File.open("diff").read
-  config.prism_enabled = true
+  config.prism_trace_file = ".prism"
+  config.prism_recording_enabled = true
 end

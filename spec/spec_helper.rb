@@ -25,8 +25,27 @@ class BadFilter
   end
 end
 
-
 class NullObject
   def method_missing(method, *args, &block)
+  end
+end
+
+class TestReader
+  def read
+    ""
+  end
+end
+
+class TestWriter
+  def initialize
+    @writes = []
+  end
+
+  def <<(arg)
+    @writes << arg
+  end
+
+  def read
+    @writes.join("")
   end
 end

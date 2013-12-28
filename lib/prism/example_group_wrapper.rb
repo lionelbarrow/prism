@@ -1,12 +1,12 @@
 module Prism
   class ExampleGroupWrapper
-    def initialize(prism_config, inner_group)
-      @config = prism_config
+    def initialize(prism_core, inner_group)
+      @p = prism_core
       @inner_group = inner_group
     end
 
     def run(reporter)
-      @config.core.run_and_save_trace!(@inner_group, reporter)
+      @p.run_group!(@inner_group, reporter)
     end
 
     def method_missing(method, *args, &block)
