@@ -7,9 +7,9 @@ Gem::Specification.new do |spec|
   spec.version       = "0.0.1"
   spec.authors       = ["lionelbarrow"]
   spec.email         = ["lionelbarrow@gmail.com"]
-  spec.description   = "PRISM watches your calls. Method calls."
+  spec.description   = "Records method calls per test and stores them in an easy-to-use format."
   spec.summary       = "PRISM watches your calls. Method calls."
-  spec.homepage      = ""
+  spec.homepage      = "http://wwww.github.com/lionelbarrow/prism"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
