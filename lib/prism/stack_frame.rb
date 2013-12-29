@@ -18,8 +18,14 @@ module Prism
       end
     end
 
-    def to_s
-      sprintf("%8s %s:%-2d %10s %8s", event, file, line, id, classname)
+    def serialize
+      {
+        "event" => @event,
+        "line" => @line,
+        "id" => @id,
+        "classname" => @classname,
+        "filename" => @filename
+      }
     end
   end
 end

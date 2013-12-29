@@ -10,12 +10,12 @@ module Prism
 
     def run_group!(example_group, reporter)
       stack_trace = _stack_trace_for_group(example_group, reporter)
-      results[stack_trace.location] = stack_trace
+      results[stack_trace.location] = stack_trace.serialize
     end
 
     def _stack_trace_for_group(example_group, reporter)
       stack_frames = @tracer.stack_trace { example_group.run(reporter) }
-      RSpecStackTrace.new(example_group, stack_frames)
+      StackTrace.new(example_group, stack_frames)
     end
   end
 end

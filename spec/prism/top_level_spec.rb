@@ -13,8 +13,8 @@ describe "prism" do
 
   it "saves a map of stack traces" do
     run_tests
-    stack_trace_sets = Marshal.load(File.read(RESULTS_FILE))
-
-    stack_trace_sets["spec/test_project/adder_spec.rb:3"].file_set.should include("lib/test_project/adder.rb")
+    stack_traces = JSON.load(File.read(RESULTS_FILE))
+    stack_traces["spec/test_project/subtracter_spec.rb:3"].should_not be_nil
+    stack_traces["spec/test_project/adder_spec.rb:3"].should_not be_nil
   end
 end
