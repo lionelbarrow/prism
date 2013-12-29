@@ -4,13 +4,13 @@ module Prism
 
     def initialize(project_root)
       @project_root = project_root
-      @results = {}
+      @results = []
       @tracer = StackTraceGenerator.new(project_root, PrismFilter, RSpecFilter)
     end
 
     def run_group!(example_group, reporter)
       stack_trace = _stack_trace_for_group(example_group, reporter)
-      results[stack_trace.location] = stack_trace.serialize
+      results << stack_trace.serialize
     end
 
     def _stack_trace_for_group(example_group, reporter)

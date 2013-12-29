@@ -14,7 +14,8 @@ describe "prism" do
   it "saves a map of stack traces" do
     run_tests
     stack_traces = JSON.load(File.read(RESULTS_FILE))
-    stack_traces["spec/test_project/subtracter_spec.rb:3"].should_not be_nil
-    stack_traces["spec/test_project/adder_spec.rb:3"].should_not be_nil
+    locations = stack_traces.map { |trace| trace["location"] }
+    locations.should include("spec/test_project/subtracter_spec.rb:3")
+    locations.should include("spec/test_project/adder_spec.rb:3")
   end
 end

@@ -12,7 +12,7 @@ describe Prism::Runner do
       end
 
       runner.run_group!(example_group, NullObject.new)
-      runner.results["spec/prism/runner_spec.rb:8"].should_not be_nil
+      runner.results.first["location"].should == "spec/prism/runner_spec.rb:8"
     end
 
     it "saves each stack trace to a unique location" do
@@ -34,8 +34,8 @@ describe Prism::Runner do
 
       runner.run_group!(example_group_two, NullObject.new)
 
-      runner.results["spec/prism/runner_spec.rb:21"].should_not be_nil
-      runner.results["spec/prism/runner_spec.rb:29"].should_not be_nil
+      runner.results.first["location"].should == "spec/prism/runner_spec.rb:21"
+      runner.results[1]["location"].should == "spec/prism/runner_spec.rb:29"
     end
   end
 end

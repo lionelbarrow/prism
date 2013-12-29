@@ -14,4 +14,12 @@ describe Prism::StackFrame do
       frame.filename.should == "spec/prism/core_spec.rb"
     end
   end
+
+  describe "seriaize" do
+    it "includes an empty string instead of null for id" do
+      frame = Prism::StackFrame.new("prism", "c-call", "/Users/lionel/prism/spec/spec_helper.rb", 5, nil, nil, nil)
+
+      frame.serialize["id"].should == ""
+    end
+  end
 end

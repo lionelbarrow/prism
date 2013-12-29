@@ -22,7 +22,7 @@ module Prism
       {
         "event" => @event,
         "line" => @line,
-        "id" => @id,
+        "id" => @id.nil? ? "" : @id,
         "classname" => @classname,
         "filename" => @filename
       }
